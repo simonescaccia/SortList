@@ -99,6 +99,9 @@ public class ListBean {
 		case "selectionsort":
 			this.algorithmType = 4;
 			break;
+		case "insertionsort":
+			this.algorithmType = 5;
+			break;
 		default:
 			String message = "Algorithm type should be one of the following: HeapSort, MergeSort, QuickSort, BubbleSort";
 			throw new AlgorithmTypeException(message);

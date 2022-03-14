@@ -138,33 +138,52 @@ public class SortListControl {
 		
 		return array;
 	}
-	
+
 	/*
 	 * [7, 3, 5, 4, 8]	n=5
-	 * k=1, x=3, j=1
 	 */
 	protected double[] ascInsertionSort(double[] array) {
 		int n = array.length;
-		for(int k=1; k<=n-1; k++) {
-			double x = array[k];
+		for(int i = 1;i < n;i++) {
+			double value = array[i];
 			int j;
-			for(j=k; j>=0; j--) {
-				if(j>0 && array[j]<=x) {
+			for(j=i-1; j>=0; j--) {
+				if(value > array[j]) {
+					//value index should be j + 1
 					break;
 				}
 			}
-			if(j<k) {
-				for(int t=k; t>=j+1; t--) {
-					array[t+1] = array[t];
-				}
-				array[j+1] = x;
+			//right shift of numbers from [j+1, i-1] to [j+2, i]
+			for(int k=i-1; k>=j+1; k--) {
+				array[k+1] = array[k];
 			}
+			array[j+1] = value;
 		}
 		
 		return array;
 	}
 	
+	/*
+	 * [7, 3, 5, 4, 8]	n=5
+	 */
 	protected double[] descInsertionSort(double[] array) {
+		int n = array.length;
+		for(int i = 1;i < n;i++) {
+			double value = array[i];
+			int j;
+			for(j=i-1; j>=0; j--) {
+				if(value < array[j]) {
+					//value index should be j + 1
+					break;
+				}
+			}
+			//right shift of numbers from [j+1, i-1] to [j+2, i]
+			for(int k=i-1; k>=j+1; k--) {
+				array[k+1] = array[k];
+			}
+			array[j+1] = value;
+		}
+		
 		return array;
 	}
 }
