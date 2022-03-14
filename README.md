@@ -1,2 +1,2 @@
 # SortList
- Web site for review sorting algortihms
+ Web app for reviewing sorting algortihms
