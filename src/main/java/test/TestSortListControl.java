@@ -21,6 +21,7 @@ public class TestSortListControl {
 	public void testSortList() throws NumbersSequenceSplitException, AlgorithmTypeException, OrderTypeException {
 		
 		boolean condAssert = true;
+		System.out.println("Test sorting: ");
 		for(int i=0; i<this.algorithms.length; i++) {
 			for(int j=0; j<this.orders.length; j++) {
 				//get ordered list

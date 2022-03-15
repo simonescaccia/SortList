@@ -1,7 +1,11 @@
 package logic.control.controlappl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import logic.control.bean.ListBean;
 import logic.control.bean.ResponseListBean;
+import logic.control.controlappl.structures.Heap;
 
 public class SortListControl {
 	
@@ -31,8 +35,12 @@ public class SortListControl {
 		//create the response bean
 		ResponseListBean rLB = new ResponseListBean(listBean);
 		
-		//dummy sort
-		rLB.setNumbersList(rLB.getListBean().getNumbersList());
+		double[] array = rLB.getListBean().getNumbersList().clone();
+		if(listBean.getOrderType()) {
+			rLB.setNumbersList(ascHeapSort(array));
+		} else {
+			rLB.setNumbersList(descHeapSort(array));
+		}
 		
 		return rLB;
 	}
@@ -51,8 +59,12 @@ public class SortListControl {
 		//create the response bean
 		ResponseListBean rLB = new ResponseListBean(listBean);
 		
-		//dummy sort
-		rLB.setNumbersList(rLB.getListBean().getNumbersList());
+		double[] array = rLB.getListBean().getNumbersList().clone();
+		if(listBean.getOrderType()) {
+			rLB.setNumbersList(ascBubbleSort(array));
+		} else {
+			rLB.setNumbersList(descBubbleSort(array));
+		}
 		
 		return rLB;
 	}
@@ -98,7 +110,35 @@ public class SortListControl {
 	/**
 	 * Implementation of sorting algorithms
 	 */
+
+	/*
+	 * HeapSort
+	 */
+	protected double[] descHeapSort(double[] array) {
+		
+		Heap h = new Heap(array);
+		List<Double> arrayOrdered = new ArrayList<Double>();
+		h.heapifyDesc();
+		while(h.getHeapLength() > 0) {
+			arrayOrdered.add(h.removeMax());
+		}
+		return arrayOrdered.stream().mapToDouble(d -> d).toArray();
+	}
 	
+	protected double[] ascHeapSort(double[] array) {
+		
+		Heap h = new Heap(array);
+		List<Double> arrayOrdered = new ArrayList<Double>();
+		h.heapifyAsc();
+		while(h.getHeapLength() > 0) {
+			arrayOrdered.add(h.removeMin());
+		}
+		return arrayOrdered.stream().mapToDouble(d -> d).toArray();
+	}
+	
+	/*
+	 * SelectionSort
+	 */
 	protected double[] ascSelectionSort(double[] array) {
 		int n = array.length;
 		//m e k due indici
@@ -140,7 +180,7 @@ public class SortListControl {
 	}
 
 	/*
-	 * [7, 3, 5, 4, 8]	n=5
+	 * InsertionSort
 	 */
 	protected double[] ascInsertionSort(double[] array) {
 		int n = array.length;
@@ -163,9 +203,6 @@ public class SortListControl {
 		return array;
 	}
 	
-	/*
-	 * [7, 3, 5, 4, 8]	n=5
-	 */
 	protected double[] descInsertionSort(double[] array) {
 		int n = array.length;
 		for(int i = 1;i < n;i++) {
@@ -182,6 +219,53 @@ public class SortListControl {
 				array[k+1] = array[k];
 			}
 			array[j+1] = value;
+		}
+		
+		return array;
+	}
+	
+	/*
+	 * BubbleSort
+	 */
+	protected double[] ascBubbleSort(double[] array) {
+		int n = array.length;
+		for(int i=1; i<n; i++) {
+			boolean scambi = false;
+			for(int j=1; j<n-i+1; j++) {
+				if(array[j-1] > array[j]) {
+					//switch array[j-1] e array[j] 
+					double temp = array[j];
+					array[j] = array[j-1];
+					array[j-1] = temp;
+					scambi = true;
+				}
+			}
+			if(!scambi) {
+				//the list is alredy ordered
+				break;
+			}
+		}
+		
+		return array;
+	}
+	
+	protected double[] descBubbleSort(double[] array) {
+		int n = array.length;
+		for(int i=1; i<n; i++) {
+			boolean scambi = false;
+			for(int j=1; j<n-i+1; j++) {
+				if(array[j-1] < array[j]) {
+					//switch array[j-1] e array[j] 
+					double temp = array[j];
+					array[j] = array[j-1];
+					array[j-1] = temp;
+					scambi = true;
+				}
+			}
+			if(!scambi) {
+				//the list is alredy ordered
+				break;
+			}
 		}
 		
 		return array;
