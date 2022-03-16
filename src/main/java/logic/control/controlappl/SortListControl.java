@@ -5,7 +5,8 @@ import java.util.List;
 
 import logic.control.bean.ListBean;
 import logic.control.bean.ResponseListBean;
-import logic.control.controlappl.structures.Heap;
+import logic.control.controlappl.structures_algorithms.Heap;
+import logic.control.controlappl.structures_algorithms.MergeSort;
 
 public class SortListControl {
 	
@@ -49,8 +50,12 @@ public class SortListControl {
 		//create the response bean
 		ResponseListBean rLB = new ResponseListBean(listBean);
 		
-		//dummy sort
-		rLB.setNumbersList(rLB.getListBean().getNumbersList());
+		double[] array = rLB.getListBean().getNumbersList().clone();
+		if(listBean.getOrderType()) {
+			rLB.setNumbersList(ascMergeSort(array));
+		} else {
+			rLB.setNumbersList(descMergeSort(array));
+		}
 		
 		return rLB;
 	}
@@ -111,6 +116,23 @@ public class SortListControl {
 	 * Implementation of sorting algorithms
 	 */
 
+	/*
+	 * MergeSort
+	 */
+	protected double[] descMergeSort(double[] array) {
+		
+		MergeSort mS= new MergeSort(array);
+		mS.mergesortDesc(0, mS.getArrayLength()-1);
+		return mS.getArray();
+	}
+	
+	protected double[] ascMergeSort(double[] array) {
+		
+		MergeSort mS= new MergeSort(array);
+		mS.mergesortAsc(0, mS.getArrayLength()-1);
+		return mS.getArray();
+	}
+	
 	/*
 	 * HeapSort
 	 */

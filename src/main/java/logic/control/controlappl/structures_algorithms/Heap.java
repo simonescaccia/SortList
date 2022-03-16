@@ -1,4 +1,4 @@
-package logic.control.controlappl.structures;
+package logic.control.controlappl.structures_algorithms;
 
 import java.util.Arrays;
 
